@@ -1,59 +1,21 @@
 <div class="container">
     <div class="row">
-        <h1>Zoznam vodičov</h1>
-    </div>
+        <div class="col-md-12">
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Vodici <a href="<?php echo base_url('Vodici/add') ?>" class="glyphicon glyphicon-plus pull-right" ></a></div>
-                    <table class="table table-striped">
-                            <tr>
-                                <th width="5%">ID</th>
-                                <th width="20%">Meno</th>
-                                <th width="20%">Priezvisko</th>
-                                <th width="20%">Mesto</th>
-                                <th width="25%">Ulica</th>
-                                <th width="10%">Rok narodenia</th>
-                                <th width="5%"></th>
-                                <th width="5%"></th>
-                                <th width="5%"></th>
-                            </tr>
+            <h1>Vodiči</h1>
 
-                            <?php
-                            if(!empty($vodici)){
-                                foreach ($vodici as $key => $value){
-                                    echo '<tr>';
-                                    echo '<td>'.$value->ID .'</td>';
-                                    echo '<td>'.$value->Meno .'</td>';
-                                    echo '<td>'.$value->Priezvisko .'</td>';
-                                    echo '<td>'.$value->Mesto .'</td>';
-                                    echo '<td>'.$value->Ulica .'</td>';
-                                    echo '<td>'.$value->Rok_narodenia .'</td>';
+            <table id="book-table" class="display" style="width:100%">
+                <thead>
+                <tr><td>ID</td><td>Meno</td><td>Priezvisko</td><td>Mesto</td><td>Ulica</td><td>Rok narodenia</td><td>Operácie</td></tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
 
-                                    echo '<td> <a href="'.base_url('Vodici/view/'.$value->ID).'" class="glyphicon glyphicon-eye-open" ></a></td>';
-                                    echo '<td> <a href="'.base_url('Vodici/edit/'.$value->ID).'" class="glyphicon glyphicon-edit" ></a></td>';
-                                    echo '<td> <a href="'.base_url('Vodici/delete/'.$value->ID).'"  class="glyphicon glyphicon-trash" onclick="return confirm(\'Naozaj chcete vymazať túto položku?\')"></a></td>';
-
-                                    echo '</tr>';
-                                }
-                            }else{
-                                echo '<tr><td colspan="4">Vodici sa nenasli</td></tr>';
-                            }
-                            ?>
-
-                    </table>
-                </div>
-            <div id="pagination" style="align-content: center">
-                <ul class="pagination">
-                    <?php foreach ($links as $link) {
-                        echo "<li class=\"page-item\">". $link."</li>";
-                    } ?>
-            </div>
-            </div>
         </div>
     </div>
 </div>
+
 <div id="chart_div" class="container">
 
 </div>
@@ -90,4 +52,38 @@
 </script>
 
 
+</body>
+</html>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#book-table').DataTable({
+            "ajax": {
+                url : "<?php echo site_url("Vodici/books_page") ?>",
+                type : 'GET'
+            },
+
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    text: 'Pridať',
+                    action: function ( e, dt, node, config ) {
+                        window.location = ' <?php echo base_url('Vodici/add') ?>';
+                    }
+                }
+                ,'csv','excel','pdf','print']
+        } );
+    } );
+</script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>

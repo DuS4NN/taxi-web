@@ -44,6 +44,7 @@
 
         public function delete($id){
             $delete = $this->db->delete('vodici',array('ID' => $id));
+
             return $delete? true:false;
         }
 

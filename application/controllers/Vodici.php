@@ -3,10 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     class Vodici extends CI_Controller{
 
+        public function __construct() {
+            Parent::__construct();
+            $this->load->model("Vodici_Model");
+        }
+
         public function index(){
             $this->load->library('pagination');
-            $this->load->model('Vodici_Model');
-            //$data['vodici'] = $this->Vodici_Model->view();
             $data['title'] = 'Vodiči';
 
             $config = array();
@@ -37,13 +40,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $this->load->view('templates/footer');
         }
 
+        public function books_page()
+        {
+            // Datatables Variables
+            $draw = intval($this->input->get("draw"));
+            $start = intval($this->input->get("start"));
+            $length = intval($this->input->get("length"));
+
+
+            $query = $this->Vodici_Model->view();
+
+            $data = array();
+
+            foreach($query as $r) {
+
+                $data[] = array(
+                    $r['ID'],
+                    $r['Meno'],
+                    $r['Priezvisko'],
+                    $r['Mesto'],
+                    $r['Ulica'],
+                    $r['Rok_narodenia'],
+                    '<a href="'.base_url('Vodici/view/'.$r['ID']).'"  > <button type="button" class="btn btn-info">Detail</button> </a>' . '<a href="'.base_url('Vodici/edit/'.$r['ID']).'"  > <button type="button" class="btn btn-warning">Editovať</button> </a>'. '<a href="'.base_url('Vodici/delete/'.$r['ID']).'"  > <button type="button" class="btn btn-danger">Vymazať</button> </a>'
+                );
+            }
+
+            $output = array(
+                "draw" => $draw,
+                "recordsTotal" => $this->Vodici_Model->row_count(),
+                "recordsFiltered" => $this->Vodici_Model->row_count(),
+                "data" => $data
+            );
+            echo json_encode($output);
+            exit();
+        }
+
         public function view($id){
-            $this->load->model('Vodici_model');
             $data = array();
             $data['title'] = 'Detail vodiča';
 
             if(!empty($id)){
-                $data['vodici'] = $this->Vodici_model->view($id);
+                $data['vodici'] = $this->Vodici_Model->view($id);
                 $this->load->view('templates/header');
                 $this->load->view('pages/Vodici_view',$data);
                 $this->load->view('templates/footer');
@@ -55,7 +92,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function add(){
             $data = array();
             $postData = array();
-            $this->load->model('Vodici_model');
             if ($this->input->post('postSubmit')) {
 
                 $this->form_validation->set_rules('Meno', 'Meno', 'required');
@@ -72,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $postData[0]['Rok_narodenia'] = $this->input->post('Rok_narodenia');
 
                if ($this->form_validation->run() == true) {
-                    $insert = $this->Vodici_model->insert($postData);
+                    $insert = $this->Vodici_Model->insert($postData);
                     redirect('/vodici');
                 }
 
@@ -87,9 +123,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
 
         public function edit($id){
-            $this->load->model('Vodici_model');
             $data = array();
-            $data['data'] = $this->Vodici_model->view($id);
+            $data['data'] = $this->Vodici_Model->view($id);
 
 
             if ($this->input->post('postSubmit')) {
@@ -108,7 +143,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $postData[0]['Rok_narodenia'] = $this->input->post('Rok_narodenia');
 
             if ($this->form_validation->run() == true) {
-                $update = $this->Vodici_model->update($postData,$id);
+                $update = $this->Vodici_Model->update($postData,$id);
                 print_r($postData);
                 redirect('/vodici');
             }
@@ -123,9 +158,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
 
         public function delete($id){
-            $this->load->model('Vodici_model');
             if(!empty($id)){
-                $delete = $this->Vodici_model->delete($id);
+                $delete = $this->Vodici_Model->delete($id);
                 redirect('/vodici');
             }
         }
