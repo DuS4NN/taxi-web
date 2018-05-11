@@ -1,15 +1,4 @@
 <div class="container">
-    <?php if(!empty($success_msg)){ ?>
-        <div class="col-xs-12">
-            <div class="alert alert-success"><?php echo $success_msg;
-                ?></div>
-        </div>
-    <?php }elseif(!empty($error_msg)){ ?>
-        <div class="col-xs-12">
-            <div class="alert alert-danger"> <?php echo $error_msg; ?> </div>
-        </div>
-    <?php } ?>
-
     <div class="row">
         <h1>Zoznam vodičov</h1>
     </div>
@@ -65,5 +54,40 @@
         </div>
     </div>
 </div>
+<div id="chart_div" class="container">
+
+</div>
+
+<script type="text/javascript">
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Vek');
+        data.addColumn('number', 'Počet');
+        data.addRows([
+
+            <?php
+                foreach ($result as $value){
+                    echo "['".$value['age']."',".$value['number']."],";
+                }
+            ?>
+        ]);
+
+
+
+        var options = {'title':'Pomer vekových skupín vodičov',
+            'width':600,
+            'height':500};
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
+
 
 

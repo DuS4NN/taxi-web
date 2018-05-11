@@ -26,12 +26,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             else{
                 $page = 0;
             }
+            $data['result'] = $this->Vodici_Model->data();
 
             $data['vodici'] = $this->Vodici_Model->fetch_data($config["per_page"], $page);
             $str_links = $this->pagination->create_links();
             $data["links"] = explode('&nbsp;',$str_links );
 
-            $this->load->view('templates/header');
+            $this->load->view('templates/header',$data);
             $this->load->view('pages/Vodici',$data);
             $this->load->view('templates/footer');
         }

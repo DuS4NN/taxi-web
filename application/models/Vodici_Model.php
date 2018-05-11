@@ -46,4 +46,21 @@
             $delete = $this->db->delete('vodici',array('ID' => $id));
             return $delete? true:false;
         }
+
+        public function data(){
+            $query = $this->db->query("SELECT SUM(CASE WHEN YEAR(CURDATE())- Rok_narodenia BETWEEN '18' AND '29' THEN '1' ELSE '0' END) AS '18-29',
+                                        SUM(CASE WHEN YEAR(CURDATE())- Rok_narodenia BETWEEN '30' AND '44' THEN '1' ELSE '0' END) AS '30-44',
+                                        SUM(CASE WHEN YEAR(CURDATE())- Rok_narodenia BETWEEN '45' AND '70' THEN '1' ELSE '0' END) AS '45-70'
+                                FROM vodici")->result_array();
+
+            $data = array();
+            $data[0]['number'] = $query[0]['18-29'];
+            $data[0]['age'] = '18-29';
+            $data[1]['number'] = $query[0]['30-44'];
+            $data[1]['age'] = '30-44';
+            $data[2]['number'] = $query[0]['45-70'];
+            $data[2]['age'] = '45-70';
+
+            return $data;
+        }
     }
