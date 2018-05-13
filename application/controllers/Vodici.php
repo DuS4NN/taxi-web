@@ -9,32 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
 
         public function index(){
-            $this->load->library('pagination');
-            $data['title'] = 'Vodiči';
-
-            $config = array();
-            $config['base_url'] = base_url('Vodici/index/');
-            $config['total_rows'] = $this->db->count_all('vodici');
-            $config['per_page'] = 3;
-            $config['num_links'] = 5;
-            $config['cur_tag_open'] = '&nbsp;<a class="page-link">';
-            $config['cur_tag_close'] = '</a>';
-            $config['next_link'] = 'Next';
-            $config['prev_link'] = 'Previous';
-
-            $this->pagination->initialize($config);
-            if($this->uri->segment(3)){
-                $page = ($this->uri->segment(3)) ;
-            }
-            else{
-                $page = 0;
-            }
+            $data['title'] = 'Drivers';
             $data['result'] = $this->Vodici_Model->data();
-
-            $data['vodici'] = $this->Vodici_Model->fetch_data($config["per_page"], $page);
-            $str_links = $this->pagination->create_links();
-            $data["links"] = explode('&nbsp;',$str_links );
-
             $this->load->view('templates/header',$data);
             $this->load->view('pages/Vodici',$data);
             $this->load->view('templates/footer');
@@ -61,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $r['Mesto'],
                     $r['Ulica'],
                     $r['Rok_narodenia'],
-                    '<a href="'.base_url('Vodici/view/'.$r['ID']).'"  > <button type="button" class="btn btn-info">Detail</button> </a>' . '<a href="'.base_url('Vodici/edit/'.$r['ID']).'"  > <button type="button" class="btn btn-warning">Editovať</button> </a>'. '<a href="'.base_url('Vodici/delete/'.$r['ID']).'"  > <button type="button" class="btn btn-danger">Vymazať</button> </a>'
+                    '<a href="'.base_url('Vodici/view/'.$r['ID']).'" > <button type="button" class="btn btn-info">Detail</button> </a>' . '<a href="'.base_url('Vodici/edit/'.$r['ID']).'"  > <button type="button" class="btn btn-warning">Edit</button> </a>'. '<a href="'.base_url('Vodici/delete/'.$r['ID']).'"  > <button type="button" class="btn btn-danger">Delete</button> </a>'
                 );
             }
 
@@ -81,9 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             if(!empty($id)){
                 $data['vodici'] = $this->Vodici_Model->view($id);
-                $this->load->view('templates/header');
                 $this->load->view('pages/Vodici_view',$data);
-                $this->load->view('templates/footer');
             }else{
                 redirect('/pages/vodici');
             }
@@ -117,9 +91,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $data['title'] = 'Vytvorenie vodiča';
             $data['action'] = 'Pridať';
 
-            $this->load->view('templates/header', $data);
             $this->load->view('pages/Vodici_add-edit', $data);
-            $this->load->view('templates/footer');
+
         }
 
         public function edit($id){
@@ -152,9 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $data['title'] = 'Vytvorenie vodiča';
             $data['action'] = 'Editovať';
 
-            $this->load->view('templates/header', $data);
             $this->load->view('pages/Vodici_add-edit', $data);
-            $this->load->view('templates/footer');
         }
 
         public function delete($id){

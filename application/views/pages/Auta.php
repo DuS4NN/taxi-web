@@ -3,7 +3,7 @@
         <br>
         <table id="book-table" class="display" style="width:100%">
             <thead>
-            <tr><td>ID</td><td>First Name</td><td>Second Name</td><td>City</td><td>Adrress</td><td>Year of birth</td><td>Operations</td></tr>
+            <tr><td>ID</td><td>Znacka</td><td>Model</td><td>Rok Vyroby</td><td>SPZ</td><td>Operations</td></tr>
             </thead>
             <tbody>
             </tbody>
@@ -12,7 +12,7 @@
     <br>
     <div style="width:50%;  margin:auto;">
         <div id="chart_div" style="width:500px; margin: auto" "></div>
-    </div>
+</div>
 </div>
 
 
@@ -31,15 +31,15 @@
         data.addRows([
 
             <?php
-                foreach ($result as $value){
-                    echo "['".$value['age']."',".$value['number']."],";
-                }
+            foreach ($result as $value){
+                echo "['".$value['age']."',".$value['number']."],";
+            }
             ?>
         ]);
 
 
 
-        var options = {'title':'Pomer vekových skupín vodičov',
+        var options = {'title':'Rok výroby našich áut',
             'width':500,
             'height':300};
 
@@ -56,7 +56,7 @@
     $(document).ready(function() {
         $('#book-table').DataTable({
             "ajax": {
-                url : "<?php echo site_url("Vodici/books_page") ?>",
+                url : "<?php echo site_url("Auta/books_page") ?>",
                 type : 'GET'
             },
 
@@ -65,7 +65,7 @@
                 {
                     text: 'Add',
                     action: function ( e, dt, node, config ) {
-                        window.location = ' <?php echo base_url('Vodici/add') ?>';
+                        window.location = ' <?php echo base_url('Auta/add') ?>';
                     }
                 }
                 ,'csv','excel','pdf','print']

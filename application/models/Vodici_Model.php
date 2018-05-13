@@ -10,18 +10,6 @@
             return $query->result_array();
         }
 
-        public function fetch_data($limit,$start){
-            $this->db->limit($limit,$start);
-            $query = $this->db->get("vodici");
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $row) {
-                    $data[] = $row;
-                }
-                return $data;
-            }
-            return false;
-        }
-
         public function insert($data = array()){
             $insert = $this->db->insert('vodici',$data[0]);
             if($insert){
