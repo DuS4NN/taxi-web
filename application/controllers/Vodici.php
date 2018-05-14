@@ -99,7 +99,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $data = array();
             $data['data'] = $this->Vodici_Model->view($id);
 
-
             if ($this->input->post('postSubmit')) {
                 $this->form_validation->set_rules('Meno', 'Meno', 'required');
                 $this->form_validation->set_rules('Priezvisko', 'Priezvisko', 'required');
@@ -117,12 +116,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             if ($this->form_validation->run() == true) {
                 $update = $this->Vodici_Model->update($postData,$id);
-                print_r($postData);
                 redirect('/vodici');
             }
 
             $data['post'] = $postData;
-            $data['title'] = 'Vytvorenie vodiča';
+            $data['title'] = 'Editovanie vodiča';
             $data['action'] = 'Editovať';
 
             $this->load->view('pages/Vodici_add-edit', $data);

@@ -63,7 +63,7 @@
                             <li class="current"><a href="<?php echo site_url('Main')  ?>">Home</a></li>
                             <li><a href="<?php echo site_url('Vodici')  ?>">Drivers</a></li>
                             <li><a href="<?php echo site_url('Auta')  ?>">Cars</a></li>
-                            <li><a href="<?php echo site_url('Jazdy')  ?>">Rides</a></li>
+                            <li><a href="<?php echo site_url('Jazda')  ?>">Rides</a></li>
                         </ul>
                     </nav>
                     <div class="clear"></div>

@@ -1,9 +1,9 @@
 <div class="content" >
-    <div style="width: 50%; margin: auto;">
+    <div style="width: 95%; margin: auto;">
         <br>
         <table id="book-table" class="display" style="width:100%">
             <thead>
-            <tr><td>ID</td><td>Znacka</td><td>Model</td><td>Rok Vyroby</td><td>SPZ</td><td>Operations</td></tr>
+            <tr><td>ID</td><td>Počet kilometrov</td><td>Cena</td><td>Odkiaľ</td><td>Kam</td><td>Čas vyzdvihnutia</td><td>Čas vysadenia</td><td>Číslo zákazníka</td><td>Meno vodiča</td><td>Priezvisko vodiča</td><td>Značka auta</td><td>Model auta</td><td>Operations</td></tr>
             </thead>
             <tbody>
             </tbody>
@@ -11,11 +11,9 @@
     </div>
     <br>
     <div style="width:50%;  margin:auto;">
-        <div id="donutchart" style="width:500px; margin: auto" "></div>
+        <div id="chart_div" style="width:500px; margin: auto" "></div>
 </div>
 </div>
-
-
 
 <script type="text/javascript">
 
@@ -26,26 +24,32 @@
 
 
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Age');
-        data.addColumn('number', 'Number');
+        data.addColumn('string', 'Day');
+        data.addColumn('number', 'Value');
         data.addRows([
 
             <?php
             foreach ($result as $value){
-                echo "['".$value['age']."',".$value['number']."],";
+                echo "['".$value['day']."',".$value['cena']."],";
             }
             ?>
         ]);
 
 
 
-        var options = {'title':'Rok výroby našich áut',
-            'width':500,
-            'height':300,
-            pieHole: 0.4,
+        var options = {
+            title: 'Priemerné zárobky jednotlivých dní',
+            hAxis: {
+                title: 'Deň',
+                format: 'h:mm a',
+
+            },
+            vAxis: {
+                title: 'Priemerný zárobok'
+            }
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
 </script>
@@ -58,7 +62,7 @@
     $(document).ready(function() {
         $('#book-table').DataTable({
             "ajax": {
-                url : "<?php echo site_url("Auta/books_page") ?>",
+                url : "<?php echo site_url("Jazda/books_page") ?>",
                 type : 'GET'
             },
 
@@ -67,7 +71,7 @@
                 {
                     text: 'Add',
                     action: function ( e, dt, node, config ) {
-                        window.location = ' <?php echo base_url('Auta/add') ?>';
+                        window.location = ' <?php echo base_url('Jazda/add') ?>';
                     }
                 }
                 ,'csv','excel','pdf','print']

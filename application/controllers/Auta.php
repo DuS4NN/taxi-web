@@ -119,7 +119,7 @@ class Auta extends CI_Controller{
         }
 
         $data['post'] = $postData;
-        $data['title'] = 'Vytvorenie auta';
+        $data['title'] = 'Editovanie auta';
         $data['action'] = 'Editovať';
 
         $this->load->view('pages/Auta_add-edit', $data);
