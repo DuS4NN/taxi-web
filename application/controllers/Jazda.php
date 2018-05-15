@@ -6,7 +6,7 @@ class Jazda extends CI_Controller{
     public function __construct() {
         Parent::__construct();
         $this->load->model("Jazda_Model");
-        $this->load->model("Zakaznik_Model");
+        $this->load->model("Zakaznici_Model");
         $this->load->model("Smeny_Model");
     }
 
@@ -74,7 +74,6 @@ class Jazda extends CI_Controller{
     {
         return TRUE;
     }
-
 
     public function add(){
         $data = array();

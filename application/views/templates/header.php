@@ -35,6 +35,7 @@
                                 <li <?php if($title=='Drivers')echo 'class="current"';  ?>><a href="<?php echo site_url('Vodici')  ?>">Drivers</a></li>
                                 <li <?php if($title=='Cars')echo 'class="current"';  ?>><a href="<?php echo site_url('Auta')  ?>">Cars</a></li>
                                 <li <?php if($title=='Rides')echo 'class="current"';  ?>><a href="<?php echo site_url('Jazda')  ?>">Rides</a></li>
+                                <li <?php if($title=='Customers')echo 'class="current"';  ?>><a href="<?php echo site_url('Zakaznici')  ?>">Customers</a></li>
                             </ul>
                         </nav>
                         <div class="clear"></div>

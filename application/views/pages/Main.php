@@ -64,6 +64,7 @@
                             <li><a href="<?php echo site_url('Vodici')  ?>">Drivers</a></li>
                             <li><a href="<?php echo site_url('Auta')  ?>">Cars</a></li>
                             <li><a href="<?php echo site_url('Jazda')  ?>">Rides</a></li>
+                            <li><a href="<?php echo site_url('Zakaznici')  ?>">Customers</a></li>
                         </ul>
                     </nav>
                     <div class="clear"></div>
